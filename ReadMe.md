@@ -1,4 +1,4 @@
-# Coding Challenge Read Me - C# Implementation
+# Coding Challenge Read Me - Python Implementation
 
 
 ## How to Run / Execute

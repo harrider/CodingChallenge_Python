@@ -50,8 +50,18 @@ class EmployeeHierarchyPrinter:
             builder.write(f'Employees of: {employee.manager.name}')
             builder.write("\n")
 
+
+            # WIP
+            # =========================================================
+            # https://docs.python.org/3/howto/sorting.html
+            # sortedEmployees = sorted(employee.employees, key = lambda x: x.name)
+            # =========================================================
+            # WIP
+
+
             # Iterate through a Manager's list of direct reports
             for person in employee.employees:
+            # for person in sortedEmployees:
 
                 # If current direct report is a 'Manager'
                 if isinstance(person, Manager):

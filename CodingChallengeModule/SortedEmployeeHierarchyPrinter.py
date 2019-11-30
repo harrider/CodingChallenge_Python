@@ -15,6 +15,12 @@ class SortedEmployeeHierarchyPrinter:
     #   Input: rootManager : Manager
     #   Output: printString : str
     def PrintString(self, rootManager : Manager):
+        
+        # Guard clauses to ensure parameters are valid
+        if rootManager is None:
+            raise ValueError('ERROR :: value for "manager" is NONE!')
+        if isinstance(rootManager, Manager) == False:
+            raise ValueError('ERROR :: type of "manager" is not "Manager"!')
 
         # Build the formatted employee hierarchy print string
         printString = self.__PrintStringRecursive(rootManager, 0)
@@ -28,6 +34,14 @@ class SortedEmployeeHierarchyPrinter:
     #   Output: builder : string
     def __PrintStringRecursive(self, employee : Union[Employee, Manager], hierarchyLevel : int):
         
+        # Guard clauses to ensure parameters are valid
+        if employee is None:
+            raise ValueError('ERROR :: value for "manager" is NONE!')
+        if isinstance(employee, Manager) == False and isinstance(employee, Employee) == False:
+            raise ValueError('ERROR :: type of "employee" must be "Manager" or "Employee"!')
+        if hierarchyLevel < 0:
+            raise ValueError('ERROR :: value for "hierarchyLevel" is NEGATIVE!')
+
         # Create a string builder object
         builder = StringIO()
 

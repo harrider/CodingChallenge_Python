@@ -5,9 +5,25 @@
 
 1. On the command line, navigate to the top-level 'CodingChallenge_Python" directory
 
-2. On the command line, type 'py __main__.py'
+2. For **UNSORTED** employee hierarchy output: 
+    * On the command line, type:
+        * 'py __main__.py'
+
+3. For **SORTED** employee hierarchy output: 
+    * On the command line, type:
+        * 'py __main__.py -s True'
+        * 'py __main__.py --sort True'
 
 ![How To Run](./Images/HowToRun.PNG)
+
+
+## How to Run Unit Tests
+
+1. On the command line, navigate to the top level 'CodingChallenge_Python" directory
+
+2. on the command line, type 'py -m unittest discover -s UnitTests -p '*UnitTests.py' -v'
+
+![How To Run Unit Tests](./Images/HowToRunUnitTests.PNG)
 
 
 ## Example Program Input and Output
@@ -46,4 +62,4 @@
 
 ## UML Diagram for Idea of How Types are Composed
 
-![Coding Challenge Implementation Overview](./Images/UmlOverview.png)
+![Coding Challenge Implementation Overview](./Images/UML_Overview_0_0_2.png)

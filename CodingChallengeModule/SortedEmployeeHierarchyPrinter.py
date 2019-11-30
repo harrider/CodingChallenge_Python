@@ -64,7 +64,6 @@ class SortedEmployeeHierarchyPrinter:
             builder.write(f'Employees of: {employee.manager.name}')
             builder.write("\n")
 
-            # https://docs.python.org/3/howto/sorting.html
             # Sort the current manager's list of employees / direct reports
             sortedEmployees = sorted( employee.employees, key = lambda x: x.name )
 

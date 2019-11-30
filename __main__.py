@@ -1,6 +1,8 @@
-import argparse
+import json
+import os
 from CodingChallengeModule.Classes import Employee, Manager
 from CodingChallengeModule.DataReader import DataReader
+from CodingChallengeModule.JsonDataReader import JsonDataReader
 from CodingChallengeModule.EmployeeHierarchyPrinter import EmployeeHierarchyPrinter
 from CodingChallengeModule.SortedEmployeeHierarchyPrinter import SortedEmployeeHierarchyPrinter
 from CodingChallengeModule.SalaryRequirementPrinter import SalaryRequirementPrinter
@@ -8,24 +10,32 @@ from CodingChallengeModule.SalaryRequirementPrinter import SalaryRequirementPrin
 
 # Main
 if __name__ == "__main__":
-    # Create a command line argument parser
-    parser = argparse.ArgumentParser(description='flag to determine whether to sort the employee hierarchy output')
-    parser.add_argument('-s', '--sort',
-                        dest='sortOutput',
-                        type=bool,
-                        default=False,
-                        help='flag to determine whether to sort the employee hierarchy output')
 
-    # Parse for any command line arguments
-    args = parser.parse_args()
+    # Load app settings from settings file
+    with open('appsettings.json', 'r') as settingsFile:
+        settings = json.load(settingsFile)
 
-    # Create a DataReader object and read employee hierarchy data
-    dataReader = DataReader()
-    rootManager = dataReader.Read()
+        # Guard clause to check for an empty 'settings' variable
+        if settings == None:
+            raise TypeError('ERROR :: Problem reading "appsettings.json"!')
+        if type(settings['EmployeeHierarchyFileName']) != str:
+            raise TypeError('ERROR :: Value for settings parameter "EmployeeHierarchyFileName" must be a string!')
+        if type(settings['SortEmployeeHierarchyOutput']) != bool:
+            raise TypeError('ERROR :: Value for settings parameter "SortEmployeeHierarchyOutput" must be a bool!')
+
+    # Get the app settings values for the specified keys
+    employeeHierarchyFileName = settings['EmployeeHierarchyFileName']
+    sortEmployeeHierarchyOutputFlag = settings['SortEmployeeHierarchyOutput']
+
+    # Create the filepath to the employee hierarchy json file
+    hierarchyFilePath = os.path.join(os.getcwd(), employeeHierarchyFileName)
+    
+    # Create a DataReader object
+    dataReader = JsonDataReader(hierarchyFilePath)
 
     # Create the data printers that deal with the formatting of the output
-    # if command line argument '-s' or '--sort' used, create a SortedEmployeeHieararchyPrinter
-    if args.sortOutput:
+    # if 'SortEmployeeHierarchyOutput' is true, create a SortedEmployeeHierarchyPrinter:
+    if sortEmployeeHierarchyOutputFlag:
         hierarchyPrinter = SortedEmployeeHierarchyPrinter()
     # else, create an unsorted EmployeeHieararchyPrinter
     else:
@@ -33,6 +43,9 @@ if __name__ == "__main__":
 
     # Create a salary requirement printer
     salaryRequirementPrinter = SalaryRequirementPrinter()
+
+    # Read Employee Data from Data Source
+    rootManager = dataReader.Read()
 
     # Call the data printers' 'PrintString' methods to get the formatted output strings
     employeeHierarchyString = hierarchyPrinter.PrintString(rootManager)
